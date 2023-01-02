@@ -28,7 +28,7 @@ Responsive.<br>
 ---
 
 - Ver el Datalist Alternativo Elinv en funcionamiento.: <br>
-<a href="https://www.elinv.musica.ar/paciencia/telefBragado/">
+<a href="https://www.elinv.musica.ar/paciencia/telefBragado/" target="_blank">
    Enlace Datalist Alternativo Elinv en funcionamiento.
 </a>
 
