@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Datalist Elinv (Pc, Móvil y Table) [Insensible a mayúscula, minúsculas y acentos]</title>
+	<style>
+		:root {
+			/* Ancho y alto del datalist en PC, Table y Telefono */
+			--datalistElinvWidthPC: 97%;
+			--datalistElinvHeightPC: 15em;
+
+			--datalistElinvWidthTable: 97%;
+			--datalistElinvHeightTable: 15em;
+
+			--datalistElinvWidthPhone: 97%;
+			--datalistElinvHeightPhone: 30em;
+		}
+
+		* {
+			box-sizing: border-box
+		}
+
+		.contenedor {
+			font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;
+			font-size: 18px;
+			letter-spacing: 2px;
+			word-spacing: 2px;
+			color: #000000;
+			font-weight: normal;
+			text-decoration: none;
+			font-style: normal;
+			font-variant: normal;
+			text-transform: none;
+			text-shadow: #e0e0e0 1px 1px 0;
+			width: 100%;
+			display: block;
+			text-align: center;
+		}
+
+		/* Botón de busqueda */
+		.searchBut {
+			box-shadow: inset 0px 1px 3px 0px #91b8b3;
+			background: linear-gradient(to bottom, #768d87 5%, #6c7c7c 100%);
+			background-color: #60c0a6;
+			border-radius: 5px;
+			border: 1px solid #566963;
+			display: inline-block;
+			cursor: pointer;
+			color: #ffffff;
+			font-family: Arial;
+			font-size: 15px;
+			font-weight: bold;
+			padding: 11px 23px;
+			text-decoration: none;
+			text-shadow: 0px -1px 0px #00ffdd;
+			text-align: center;
+		}
+
+		.searchBut:hover {
+			background: linear-gradient(to bottom, #6c7c7c 5%, #768d87 100%);
+			background-color: #6c7c7c;
+		}
+
+		.searchBut:active {
+			position: relative;
+			top: 1px;
+		}
+
+		/* Led de resultados*/
+		.ledRes,
+		.ledResText {
+			box-shadow: 0px 1px 0px 0px #f0f7fa;
+			background: linear-gradient(to bottom, #33bdef 5%, #019ad2 100%);
+			background-color: #33bdef;
+			border-radius: 6px;
+			border: 1px solid #057fd0;
+			display: inline-block;
+			cursor: pointer;
+			color: #ffffff;
+			font-family: Arial;
+			font-size: 15px;
+			font-weight: bold;
+			padding: 11px 23px;
+			margin-top: 0.5em;
+			text-decoration: none;
+			text-shadow: 0px -1px 0px #5b6178;
+			text-align: center;
+		}
+
+		.ledRes:hover,
+		.ledResText:hover {
+			background: linear-gradient(to bottom, #019ad2 5%, #33bdef 100%);
+			background-color: #019ad2;
+		}
+
+		.ledRes:active,
+		.ledResText:active {
+			position: relative;
+			top: 1px;
+		}
+
+		.ledResText {
+			display: none;
+			width: 90%;
+		}
+
+		.dataListElinv {
+			width: var(--datalistElinvWidthPC);
+			max-height: var(--datalistElinvHeightPC);
+			margin-top: 2em;
+			margin-left: 1%;
+			overflow-y: scroll;
+			border: 5px solid #1C6EA4;
+			-webkit-box-shadow: 5px 5px 15px 5px #000000;
+			box-shadow: 5px 5px 15px 5px #000000;
+			-webkit-border-radius: 5px;
+			-moz-border-radius: 5px;
+			border-radius: 5px;
+			display: none;
+		}
+
+		.in {
+			animation: fadeIn 0.4s ease-in-out;
+		}
+
+		.out {
+			animation: fadeOut 0.4s linear;
+		}
+
+		@keyframes fadeIn {
+			0% {
+				opacity: 0;
+			}
+
+			100% {
+				opacity: 1;
+			}
+		}
+
+
+		@keyframes fadeOut {
+			0% {
+				opacity: 1;
+			}
+
+			100% {
+				opacity: 0;
+			}
+		}
+
+		.options:nth-child(2n+1) {
+			background-color: #6de64c;
+			border-bottom: 1px solid #1C6EA4;
+			border-top: 1px solid #1C6EA4;
+			border-right: 1px solid #1C6EA4;
+		}
+
+		.options:nth-child(2n+2) {
+			border-right: 1px solid #1C6EA4;
+			border-bottom: 1px solid #1C6EA4;
+		}
+
+		.options:nth-child(2n+1):hover {
+			background-color: #ff1b1b;
+		}
+
+		.options:nth-child(2n+2):hover {
+			background-color: #ff1b1b;
+		}
+
+		.options:nth-child(2n+1):focus-within {
+			background-color: #ff1b1b;
+		}
+
+		.options:nth-child(2n+2):focus-within {
+			background-color: #ff1b1b;
+		}
+
+
+		.vertical-center {
+			margin-left: auto; 
+			margin-right: auto; 
+			max-width: 1000px;
+			float: none;
+		}
+
+		/* Título principal */
+		.titulo{
+			color: #d9d9d9;
+			font-size: calc(1.4em + 1.4vw);
+			text-decoration: underline;
+			text-align: center;
+
+			background: #e8e8e8;
+			text-shadow: -1px -1px 1px rgba(255,255,255,.1), 1px 1px 1px rgba(0,0,0,.5);
+			line-height: 1.2;
+		}
+		.tit1 {
+
+			color: #1477e8;
+			font-size: calc(0.4em + 0.4vw);
+			margin-top: 1em;
+			margin-bottom: 1em;
+			width: 50%;
+			
+			border: 2px solid #1C6EA4;
+
+			-webkit-box-shadow: 5px 5px 15px 5px #706d6d; 
+			box-shadow: 5px 5px 15px 5px #4b4b4b;
+
+			-webkit-border-radius: 20px;
+			-moz-border-radius: 20px;
+			border-radius: 20px;
+		}
+
+		.margenArriba {
+			margin-top: 1.0em;
+		}
+
+		/* tablet y telefono horizontal */
+		@media screen and (max-width: 950px) {
+			.dataListElinv {
+				width: var(--datalistElinvWidthTable);
+				max-height: var(--datalistElinvHeightTable);
+				margin-top: 1.5em;
+			}
+
+			.ledResText {
+				width: 98%;
+			}
+		}
+
+		/*teléfono vertical */
+		@media screen and (max-width: 600px) {
+			.dataListElinv {
+				width: var(--datalistElinvWidthPhone);
+				max-height: var(--datalistElinvHeightPhone);
+				margin-top: 1.5em;
+			}
+
+			.ledResText {
+				font-size: calc(0.4em + 0.4vw);
+				width: 94%;
+			}
+		}
+
+	</style>
+</head>
+
+<body>
+
+	<div class="contenedor">
+
+		<div class="titulo">Teléfonos útiles de Bragado
+			<div class="tit1 vertical-center">
+				Datalist Elinv <br>
+				Apto y funcional para Pc, Móvil y Table <br>
+				[Insensible a mayúscula, minúsculas y acentos] <br>
+				<span style="color:#91b8b3;">Código en Github (sin clase) <br>
+				Próximamente con clase</span>
+			</div>
+		</div>
+
+		<input id="search" class="searchBut" type="text" placeholder="Ingrese texto a buscar"
+			ondblclick="this.value=''; document.getElementById('listTel').style.display = 'none'; lblHallados.value = ''; lblinnerHTML.style.display = 'none';" />
+
+		<input id="lblHallados" class="ledRes" type="label" placeholder="Resultados" disabled>
+
+		<div class="margenArriba">
+			<input id="lblinnerHTML" class="ledResText vertical-center" type="label">			
+		</div>
+		
+		<div id="listTel" class="dataListElinv in"></div>
+
+	</div>
+
+	<script src="./direcciones.js"></script>
+	<script>
+		// Para poder buscar a pesar de los acentos
+		var accent_map = { 'á': 'a', 'é': 'e', 'è': 'e', 'í': 'i', 'ó': 'o', 'ú': 'u', 'Á': 'a', 'É': 'e', 'è': 'e', 'Í': 'i', 'Ó': 'o', 'Ú': 'u' };
+		function obviarAcentos(s) {
+			if (!s) { return ''; }
+			var ret = '';
+			for (var i = 0; i < s.length; i++) {
+				ret += accent_map[s.charAt(i)] || s.charAt(i);
+			}
+			return ret;
+		};
+
+		// Para crear fragment de document => nodes
+		String.prototype.toDOM = function () {
+			var d = document
+				, i
+				, a = d.createElement("div")
+				, b = d.createDocumentFragment();
+			a.innerHTML = this;
+			while (i = a.firstChild) b.appendChild(i);
+			return b;
+		};
+
+
+		function visibles() {
+			//Recorrer con el teclado pero solo por sobre los elementos visibles.
+			let options = document.getElementsByClassName("options");
+			let tantos = options.length;
+			let arrVisibles = [];
+			for (let i = 0; i < tantos; i++) {
+				if (options[i].style.display == 'block') {
+					arrVisibles.push(options[i].id);
+				}
+			}
+			return arrVisibles;
+		}
+
+		//array de elementos visibles para navegar mediante el teclado
+		let arrVisiblesKeyNav = [];
+
+		var s = document.getElementById('search');
+		s.addEventListener('keyup', function (event) {
+			//Se ejecuta si no es espacio
+			if (event.key !== " ") {
+				// Separamos las palabras buscadas por espacio
+				let pal = this.value.split(' ');
+				//Creamos la expresión regular para buscar 
+				// hasta por cuatro argumentos.
+				let regexp;
+				if (pal.length == 1) regexp = `(?=.*${pal[0]})`
+				if (pal.length == 2) regexp = `(?=.*${pal[0]})(?=.*${pal[1]})`
+				if (pal.length == 3) regexp = `(?=.*${pal[0]})(?=.*${pal[1]})(?=.*${pal[2]})`
+				if (pal.length == 4) regexp = `(?=.*${pal[0]})(?=.*${pal[1]})(?=.*${pal[2]})(?=.*${pal[3]})`
+				// Convertimos para comparación 'insensitive'
+				regexp = regexp.toLowerCase();
+				// obviamos acentos
+				regexp = obviarAcentos(regexp);
+				// analizamos cada option
+				let options = document.getElementsByClassName("options");
+				let tantos = options.length;
+				let hallados = 0;
+				let res;
+				for (let i = 0; i < tantos; i++) {
+					let this_element = options[i];
+					let this_elementStr = this_element.innerHTML.toLowerCase();
+					// obviamos acentos
+					this_elementStr = obviarAcentos(this_elementStr);
+					// Comparamos y mostramos u ocultamos conforme el resultado
+					if (this_elementStr.match(regexp)) {
+						this_element.style.display = "block";
+						// incrementamos
+						hallados++;
+						// informamos cantidad
+						res = (hallados == 1) ? ' resultado.' : ' resultados.';
+						lblHallados.value = hallados + res;
+					} else {
+						this_element.style.display = "none";
+						this_element.classList.replace("in", "out");
+						setTimeout(function () {
+							this_element.style.display = "none";
+						}, 700);
+						lblHallados.value = "Sin resultado!";
+					}
+				}
+
+				// si no se halla ninguno ocultamos
+				let gral = document.getElementById("listTel");
+
+				if (hallados == 0 || this.value == '') {
+					gral.classList.replace("in", "out");
+					setTimeout(function () {
+						gral.style.display = "none";
+					}, 400);
+					lblHallados.value = "Sin resultado!";
+					// o mostramos.
+				} else {
+					gral.classList.replace("out", "in");
+					setTimeout(function () {
+						gral.style.display = "block";
+					}, 400);
+					// obtenemos los id en array de elem visibles
+					arrVisiblesKeyNav = visibles();
+					lblHallados.value = hallados + res;
+				}
+
+			}
+		});
+
+		let iArr = 0;
+		telArr.forEach(element => {
+			// Para poder enfocar un div 
+			// contenteditable="true" es una forma la otra
+			// o la otra agregando atributo tabindex
+			let divStr = `<div id="${iArr}" tabindex="${iArr++}" class="options">${element}</div>`
+			let nodo = divStr.toDOM();
+			listTel.appendChild(nodo);
+		});
+
+		// detect click dentro de los divs
+		document.addEventListener("click", function (event) {
+			// Si el click es dentro del listado
+			if (event.target.closest(".dataListElinv")) {
+				lblinnerHTML.value = event.target.innerHTML;
+				lblinnerHTML.style.display = "table";
+			}
+		})
+
+		// Control mediante teclas de las filas
+		var s, p = -1;
+
+		function test(s) {
+			d = document.getElementById(s);
+			d.focus();
+			//document.getElementById(s).focus({focusVisible: true});
+			lblinnerHTML.value = d.innerHTML;
+			lblinnerHTML.style.display = "block";
+		}
+
+		function next() {
+			let cuantos = arrVisiblesKeyNav.length;
+			p++;
+			if (arrVisiblesKeyNav[p] !== undefined) {
+				test(arrVisiblesKeyNav[p]);
+			} else {
+				p = cuantos;
+			}
+		}
+
+		function prev() {
+			p--;
+			if (arrVisiblesKeyNav[p] !== undefined) {
+				test(arrVisiblesKeyNav[p]);
+			} else {
+				p = -1;
+			}
+		}
+
+		document.onkeydown = function (e) {
+			e = e || window.event;
+			if (e.keyCode == 38) {
+				prev();
+			}
+			if (e.keyCode == 40) {
+				next();
+			}
+			return;
+		}
+
+	</script>
+</body>
+
+</html>
